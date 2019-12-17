@@ -3,12 +3,12 @@ import Banner from './Banner'
 import Paragraph from './Paragraph'
 import {paragraph,banner} from "./../resources/defaults"
 const Item = ({data}) => {
-  let {type, content, id, config} = data;
+  let normalizedData = {...data};
+  let {type,content} = normalizedData;
   let {title, image, text} = content;
-  
+  console.log((normalizedData?.test?.placeholder ?? "nothing found" : normalizedData.test.placeholder));
   //normalizing paragraph 
-  if (type === "Paragraph") {
-    //console.log(title, image, text)
+  if (type === "Paragraph") {    
     if(title === "") {
       title = paragraph.title;
     }
@@ -20,9 +20,10 @@ const Item = ({data}) => {
     }
     //console.log({type,id,content: {title, image, text}, config})
   }  
+  normalizedData = {...normalizedData, "content": {title, image, text}};
   
   
-  let component = type === "Paragraph" ? (<Paragraph data={{id,type, content:{title, image, text}, config}}  />) :
+  let component = type === "Paragraph" ? (<Paragraph data={normalizedData}  />) :
                   type === "Banner" ? (<Banner data={data} />) : "";    
   return (
     <>
